@@ -1,0 +1,38 @@
+### model
+model_name_or_path: /root/autodl-tmp/models/Qwen2.5-VL-7B-Instruct
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora # 使用 LoRA 轻量化微调
+lora_target: q_proj,v_proj      # 训练所有层，效果最好
+lora_rank: 4         # <--- 新增：降低矩阵维度，省显存！
+lora_alpha: 4
+
+### dataset
+dataset: material_physics # 刚才在 dataset_info.json 里起的 ID
+template: qwen2_vl
+cutoff_len: 2048
+max_samples: 25000       # 全量投入
+overwrite_cache: false
+preprocessing_num_workers: 1
+
+### output
+output_dir: /root/autodl-tmp/output/qwen_physics_v1
+logging_steps: 10
+save_steps: 100
+plot_loss: true
+overwrite_output_dir: true
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 16
+learning_rate: 5.0e-5
+num_train_epochs: 3.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+bf16: true               # 4090 开启半精度加速
+flash_attn: fa2
+optim: paged_adamw_8bit
+
+val_size: 0.05
