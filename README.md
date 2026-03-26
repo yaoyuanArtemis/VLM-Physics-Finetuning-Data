@@ -104,9 +104,6 @@ llamafactory-cli train train_qwen_physics.yaml
 
 📊 物理材料瑕疵数据集: https://huggingface.co/datasets/yaoyuanlf/physics-vlm-dataset
 
-(注：部署时，只需拉取 GitHub 的运行代码与配置，框架将自动从 Hugging Face 合并底座模型与 LoRA 权重，实现一键推理。)
-
-
 ## 八、 模型微调效果展示 (Inference Demo)
 
 为了直观验证有监督微调 (SFT) 的有效性与局限性，我们使用 `llamafactory-cli webchat` 启动了 WebUI，并使用真实的物理材料图像进行了多维度的推理测试。
