@@ -85,9 +85,9 @@ optim: paged_adamw_8bit
 ### eval
 val_size: 0.05
 ```
-最终点火命令：
+启动命令：
 Bash
-PYTORCH_ALLOC_CONF=expandable_segments:True llamafactory-cli train train_qwen_physics.yaml
+llamafactory-cli train train_qwen_physics.yaml
 
 ---
 六、 实验结果与推理部署
