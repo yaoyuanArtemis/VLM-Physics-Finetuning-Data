@@ -45,8 +45,46 @@
 ---
 五、 最终的训练配置与执行
 结合上述所有经验，我们最终定稿的 train_qwen_physics.yaml 核心配置如下：
-YAML
-### modelmodel_name_or_path: /root/autodl-tmp/models/Qwen2.5-VL-7B-Instruct### methodstage: sftdo_train: truefinetuning_type: loralora_target: q_proj,v_projlora_rank: 4lora_alpha: 4### datasetdataset: material_physicstemplate: qwen2_vlcutoff_len: 2048max_samples: 25000overwrite_cache: falsepreprocessing_num_workers: 8### outputoutput_dir: /root/autodl-tmp/output/qwen_physics_v1logging_steps: 10save_steps: 100plot_loss: trueoverwrite_output_dir: true### trainper_device_train_batch_size: 1gradient_accumulation_steps: 16learning_rate: 5.0e-5num_train_epochs: 3.0lr_scheduler_type: cosinebf16: trueflash_attn: fa2optim: paged_adamw_8bit### evalval_size: 0.05
+```yaml
+### model
+model_name_or_path: /root/autodl-tmp/models/Qwen2.5-VL-7B-Instruct
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_target: q_proj,v_proj
+lora_rank: 4
+lora_alpha: 4
+
+### dataset
+dataset: material_physics
+template: qwen2_vl
+cutoff_len: 2048
+max_samples: 25000
+overwrite_cache: false
+preprocessing_num_workers: 8
+
+### output
+output_dir: /root/autodl-tmp/output/qwen_physics_v1
+logging_steps: 10
+save_steps: 100
+plot_loss: true
+overwrite_output_dir: true
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 16
+learning_rate: 5.0e-5
+num_train_epochs: 3.0
+lr_scheduler_type: cosine
+bf16: true
+flash_attn: fa2
+optim: paged_adamw_8bit
+
+### eval
+val_size: 0.05
+```
 最终点火命令：
 Bash
 PYTORCH_ALLOC_CONF=expandable_segments:True llamafactory-cli train train_qwen_physics.yaml
